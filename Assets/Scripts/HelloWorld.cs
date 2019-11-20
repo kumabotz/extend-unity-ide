@@ -10,7 +10,7 @@ public class CustomDataStructure
     public Vector3 position;
 }
 
-public class HellowWorld : MonoBehaviour
+public class HelloWorld : MonoBehaviour
 {
     [Range(0f, 10f)]
     public float speed;
