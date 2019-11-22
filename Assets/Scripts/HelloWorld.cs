@@ -17,7 +17,7 @@ public class HelloWorld : MonoBehaviour
     public Vector3 startPos;
 
     [Tooltip("What the GameObject should follow")]
-    public GameObject target;
+    public HelloWorld target;
     public string message = "Hello World";
 
     [Header("Array Tests")]
