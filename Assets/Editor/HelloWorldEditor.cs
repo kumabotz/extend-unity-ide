@@ -17,12 +17,10 @@ public class HelloWorldEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("A Button");
-        if (GUILayout.Button("Click Me"))
+        if (GUILayout.Button("Open Test Window"))
         {
-            Debug.Log(script.message);
+            EditorWindow.GetWindow(typeof(TestWindow));
         }
         EditorGUILayout.EndHorizontal();
-        //DrawDefaultInspector();
-        //EditorGUILayout.LabelField("Custom Message", script.message);
     }
 }
