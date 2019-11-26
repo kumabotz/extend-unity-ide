@@ -1,15 +1,25 @@
 ﻿using System.IO;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Networking;
 
 [CustomEditor(typeof(SaveTest))]
 public class SaveTestEditor : Editor
 {
-    public override async void OnInspectorGUI()
+    private ReorderableList list;
+    private SaveTest saveTestScript;
+
+    private void OnEnable()
     {
-        DrawDefaultInspector();
-        var saveTestScript = Selection.activeGameObject.GetComponent<SaveTest>();
+        saveTestScript = Selection.activeGameObject.GetComponent<SaveTest>();
+        list = new ReorderableList(serializedObject, serializedObject.FindProperty("items"), true, true, true, true);
+    }
+
+    public override void OnInspectorGUI()
+    {
+        //DrawDefaultInspector();
+        list.DoLayoutList();
         EditorGUILayout.BeginVertical();
         if (GUILayout.Button("Save"))
         {
@@ -22,8 +32,8 @@ public class SaveTestEditor : Editor
             var data = ReadDataFromFile();
             saveTestScript.Load(data);
         }
-
         EditorGUILayout.EndVertical();
+        serializedObject.ApplyModifiedProperties();
     }
 
     private void WriteData(string data)

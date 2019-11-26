@@ -36,6 +36,7 @@ public class SaveTest : MonoBehaviour
 
     public void Load(string data)
     {
+        if (data == null) return;
         var itemData = data.Split(';');
         items = new List<SaveItem>();
         var total = itemData.Length;
