@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 675397110}
   - component: {fileID: 675397109}
   - component: {fileID: 675397111}
+  - component: {fileID: 675397112}
   m_Layer: 0
   m_Name: New Sprite
   m_TagString: Untagged
@@ -306,3 +307,22 @@ MonoBehaviour:
   gameObjects: []
   customTarget: []
   stringList: []
+--- !u!114 &675397112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675397108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1531346dbb52b24796156f0de262661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - name: c
+    pos: {x: 2, y: 2}
+  - name: d
+    pos: {x: 1, y: 3}
+  - name: d
+    pos: {x: 1, y: 3}
