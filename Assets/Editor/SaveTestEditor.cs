@@ -14,6 +14,38 @@ public class SaveTestEditor : Editor
     {
         saveTestScript = Selection.activeGameObject.GetComponent<SaveTest>();
         list = new ReorderableList(serializedObject, serializedObject.FindProperty("items"), true, true, true, true);
+        list.onRemoveCallback += RemoveCallback;
+        list.drawElementCallback += OnDrawCallback;
+    }
+
+    private void OnDisable()
+    {
+        if (list != null)
+        {
+            list.onRemoveCallback -= RemoveCallback;
+            list.drawElementCallback -= OnDrawCallback;
+        }
+    }
+
+    private void RemoveCallback(ReorderableList list)
+    {
+        if (EditorUtility.DisplayDialog("Warning!", "Are you sure?", "Yes", "No"))
+        {
+            ReorderableList.defaultBehaviours.DoRemoveButton(list);
+        }
+    }
+
+    private void OnDrawCallback(Rect rect, int index, bool isActive, bool isFocused)
+    {
+        var item = list.serializedProperty.GetArrayElementAtIndex(index);
+        EditorGUI.PropertyField(
+            new Rect(rect.x, rect.y, 60, EditorGUIUtility.singleLineHeight), 
+            item.FindPropertyRelative("name"),
+            GUIContent.none);
+        EditorGUI.PropertyField(
+            new Rect(rect.x + 80, rect.y, 150, EditorGUIUtility.singleLineHeight),
+            item.FindPropertyRelative("pos"),
+            GUIContent.none);
     }
 
     public override void OnInspectorGUI()
