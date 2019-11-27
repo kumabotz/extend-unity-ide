@@ -13,9 +13,18 @@ public class HelloWorldEditor : Editor
         {
             return;
         }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.BeginVertical("box");
+        EditorGUILayout.Space();
         script.speed = EditorGUILayout.Slider("Speed", script.speed, 0, 10);
         script.target = EditorGUILayout.ObjectField("Target", script.target, typeof(HelloWorld), true) as HelloWorld;
+        EditorGUILayout.Space();
+        EditorGUILayout.EndVertical();
 
+        EditorGUILayout.Space();
+        EditorGUILayout.BeginVertical("box");
+        EditorGUI.indentLevel++;
         visible = EditorGUILayout.Foldout(visible, "Options");
         if (visible)
         {
@@ -29,13 +38,16 @@ public class HelloWorldEditor : Editor
             }
             EditorGUI.indentLevel--;
         }
+        EditorGUI.indentLevel--;
+        EditorGUILayout.EndVertical();
 
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.Space();
+        EditorGUILayout.BeginVertical();
         EditorGUILayout.LabelField("A Button");
         if (GUILayout.Button("Open Test Window"))
         {
             EditorWindow.GetWindow(typeof(TestWindow));
         }
-        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndVertical();
     }
 }
