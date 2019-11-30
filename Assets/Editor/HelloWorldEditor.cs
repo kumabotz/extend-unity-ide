@@ -2,9 +2,11 @@
 using UnityEngine;
 
 [CustomEditor(typeof(HelloWorld))]
-public class HelloWorldEditor : Editor
+public class HelloWorldEditor : AbstractEditor
 {
     private bool visible;
+    protected override string title => "Test override title";
+    protected override string description => "Test override description";
 
     public override void OnInspectorGUI()
     {
@@ -13,12 +15,11 @@ public class HelloWorldEditor : Editor
         {
             return;
         }
+        base.OnInspectorGUI();
 
-        EditorGUILayout.Space();
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.Space();
         script.speed = EditorGUILayout.Slider("Speed", script.speed, 0, 10);
-        script.target = EditorGUILayout.ObjectField("Target", script.target, typeof(HelloWorld), true) as HelloWorld;
         EditorGUILayout.Space();
         EditorGUILayout.EndVertical();
 
@@ -35,6 +36,7 @@ public class HelloWorldEditor : Editor
                 var sProp = serializedObject.FindProperty(prop);
                 var guiContent = new GUIContent { text = sProp.displayName };
                 EditorGUILayout.PropertyField(sProp, guiContent);
+                DisplayPropError(sProp);
             }
             EditorGUI.indentLevel--;
         }
@@ -49,5 +51,34 @@ public class HelloWorldEditor : Editor
             EditorWindow.GetWindow(typeof(TestWindow));
         }
         EditorGUILayout.EndVertical();
+
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    private void DisplayPropError(SerializedProperty prop)
+    {
+        var empty = false;
+        switch (prop.propertyType)
+        {
+            case SerializedPropertyType.String:
+                empty = prop.stringValue == "";
+                break;
+            case SerializedPropertyType.ObjectReference:
+                empty = prop.objectReferenceValue == null;
+                break;
+            case SerializedPropertyType.Vector3:
+                empty = prop.vector3Value == Vector3.zero;
+                break;
+        }
+        if (empty)
+        {
+            DisplayError(prop.displayName);
+        }
+    }
+
+    private void DisplayError(string name)
+    {
+        var message = $"{name} field cannot be empty";
+        EditorGUILayout.HelpBox(message, MessageType.Error);
     }
 }

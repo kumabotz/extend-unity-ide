@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [CustomEditor(typeof(SaveTest))]
-public class SaveTestEditor : Editor
+public class SaveTestEditor : AbstractEditor
 {
     private ReorderableList list;
     private SaveTest saveTestScript;
@@ -50,7 +50,7 @@ public class SaveTestEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        //DrawDefaultInspector();
+        base.OnInspectorGUI();
         list.DoLayoutList();
         EditorGUILayout.BeginVertical();
         if (GUILayout.Button("Save"))
